@@ -1,0 +1,26 @@
+:root {
+    --color-primary: #f38e82;
+    --color-grad-1: #fbdb89;
+    --color-grad-2: #f48982;
+    --color-grey-light-1: #f9f5f3;
+    --color-grey-light-2: #f2efee;
+    --color-grey-light-3: #d3c7c3;
+    --color-grey-dark-1: #615551;
+    --color-grey-dark-2: #918581;
+  
+    --gradient: linear-gradient(to right bottom, var(--color-grad-1), var(--color-grad-2));
+  
+  --bp-large: 78.15em; 
+  --bp-medium: 61.25em; 
+  --bp-small: 37.5em; 
+  --bp-smallest: 31.25em; 
+  }
+
+
+@import './base.css';
+@import './header.css';
+@import './components.css';
+@import './recipe.css';
+@import './preview.css';
+@import './searchResults.css';
+@import './upload.css';
