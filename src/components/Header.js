@@ -71,9 +71,9 @@ export default function Header() {
             </button>
             <div className="bookmarks">
               <ul className="bookmarks__list">
-                {bookmarks ? (
+                {bookmarks && bookmarks.length > 0 ? (
                   bookmarks.map((bookmark) => {
-                    return <RecipePreviewCard recipe={bookmark} />;
+                    return <RecipePreviewCard recipe={bookmark} bookmark={true} />;
                   })
                 ) : (
                   <div className="message">

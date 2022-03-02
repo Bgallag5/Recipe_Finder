@@ -1,26 +1,40 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { AppContext } from "../App";
 import { getSingleRecipeData } from "../utils/API";
 
 export default function RecipePreviewCard(props) {
-  const {  setLoading, setHash} = useContext(AppContext)
+  const { setLoading, setHash, bookmarks, setBookmarks } = useContext(AppContext);
   const { id, title, img } = props.recipe;
 
   const handleRecipeClick = async () => {
-  //   //setLoading = true
-  //  setLoading(true)
-  //  const recipeData = await getSingleRecipeData(id);
-  //  console.log(recipeData);
-  //  // setCurrentRecipe(recipeData) => setHash here and listen for hash change in App - hash change to trigger setCurrent? 
-  //  setCurrentRecipe(recipeData) 
-  //  setLoading(false)
+    //   //setLoading = true
+    //  setLoading(true)
+    //  const recipeData = await getSingleRecipeData(id);
+    //  console.log(recipeData);
+    //  // setCurrentRecipe(recipeData) => setHash here and listen for hash change in App - hash change to trigger setCurrent?
+    //  setCurrentRecipe(recipeData)
+    //  setLoading(false)
 
-   setHash(id);
+    setHash(id);
+  };
+
+  const handleDeleteBookmark = (id) => {
+    //state and LS
+    let bookmarksCopy = bookmarks;
+    const newBookmarks = bookmarksCopy.filter(el => el.id !== id);
+    console.log(newBookmarks);
+    localStorage.setItem('recipe-bookmarks', JSON.stringify(newBookmarks))
+    setBookmarks(newBookmarks);
   }
 
   return (
     <li className="preview" key={id}>
-      <a className="preview__link" onClick={handleRecipeClick} href={`#${id}`}>
+      {props.bookmark && (
+        <button onClick={() => handleDeleteBookmark(id)} className="bookmark-delete-btn">
+          &times;
+        </button>
+      )}
+          <a className="preview__link" onClick={handleRecipeClick} href={`#${id}`}>
         <figure className="preview__fig">
           <img src={img} alt={title} />
         </figure>
@@ -36,11 +50,7 @@ export default function RecipePreviewCard(props) {
       </a>
     </li>
   );
-};
-
-
-
-
+}
 
 // <li class="preview">
 //   <a class="preview__link preview__link--active" href="#23456">
@@ -58,4 +68,3 @@ export default function RecipePreviewCard(props) {
 //     </div>
 //   </a>
 // </li>
-
