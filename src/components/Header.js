@@ -1,13 +1,15 @@
 import React, { useContext, useState } from "react";
 import logo from "../images/logo.png";
 import { getRecipeIDs } from "../utils/API";
-
 import { AppContext } from "../App";
 
+import RecipePreviewCard from "./RecipePreviewCard";
+
 export default function Header() {
-  const { setSearchResults, handleToggleModal } = useContext(AppContext);
+  const { setSearchResults, handleToggleModal, bookmarks } = useContext(AppContext);
 
   const [searchTerm, setSearchTerm] = useState("");
+
 
   const handleRecipeSearch = async (e) => {
     e.preventDefault();
@@ -69,9 +71,17 @@ export default function Header() {
             </button>
             <div className="bookmarks">
               <ul className="bookmarks__list">
-                <div className="message">
-                  <p>No bookmarks yet. Find a nice recipe and bookmark it :)</p>
-                </div>
+                {bookmarks ? (
+                  bookmarks.map((bookmark) => {
+                    return <RecipePreviewCard recipe={bookmark} />;
+                  })
+                ) : (
+                  <div className="message">
+                    <p>
+                      No bookmarks yet. Find a nice recipe and bookmark it :)
+                    </p>
+                  </div>
+                )}
               </ul>
             </div>
           </li>

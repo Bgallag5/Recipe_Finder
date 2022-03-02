@@ -1,10 +1,5 @@
 import { API_URL } from "./config"
 import axios from "axios";
-import React, {useContext} from "react";
-import { AppContext } from "../App";
-
-
-
 
 //fetch array of recipeIDs that match searchTerm
 export const getRecipeIDs = async function(searchTerm){

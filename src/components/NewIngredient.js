@@ -1,12 +1,12 @@
 import React from 'react'
 
-export default function NewIngredient() {
+export default function NewIngredient({ingredient, i, handleIngredientsChange}) {
   return (
-    <div className="new-ingredient">
-    <label>Ingredient 1</label>
-    <input placeholder="Ingredient" className='ingredient__data' />
-    <input type="number" placeholder="Quantity" className="ingredient__data" step={.5}/>
-    <select name="units" className="ingredient__data">
+    <div className="new-ingredient" onChange={(e) => handleIngredientsChange(e, i)}>
+    <label>Ingredient {i + 1} </label>
+    <input value={ingredient.ingredientName} name='description' placeholder="Ingredient" className='ingredient__data' />
+    <input name='quantity' value={ingredient.quantity} type="number" placeholder="Quantity" className="ingredient__data"/>
+    <select name="unit" value={ingredient.units} className="ingredient__data">
         <option value="">Select measurment</option>
         <option value={'cups'}>cups</option>
         <option value={'pints'}>pints</option>

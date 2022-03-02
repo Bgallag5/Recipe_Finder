@@ -1,22 +1,21 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { AppContext } from "../App";
-import NoResults from "./AppMessages/NoResults";
+import { addBookmark } from "../utils/helpers";
+
 import StartSearch from "./AppMessages/StartSearch";
 import Spinner from "./AppMessages/Spinner";
 
-export default function RecipeDisplay() {
-  const { currentRecipe, loading } = useContext(AppContext);
-  console.log(currentRecipe);
-  // {publisher: 'All Recipes', ingredients: Array(8), source_url: 'http://allrecipes.com/Recipe/Cheddar-Bacon-Hamburgers/Detail.aspx', image_url: 'http://forkify-api.herokuapp.com/images/20863b0e4.jpg', title: 'Cheddar Bacon Hamburgers', …}
 
-  const addBookmark = () => {
-    let bookmarks = JSON.parse(localStorage.getItem('recipe-bookmarks'));
-    console.log(bookmarks);
-    if (bookmarks == null) return
-    localStorage.setItem('recipe-bookmarks', JSON.stringify([...bookmarks, "893072514908ufioweh"]))
-  };
-  // document.addEventListener('click', addBookmark)
-  // addBookmark();          
+export default function RecipeDisplay() {
+  const { currentRecipe, loading, setBookmarks } = useContext(AppContext);
+
+  //add bookmark to localStorage and setState
+const handleAddBookmark = async (currentRecipe) => {
+   addBookmark(currentRecipe);
+    let newBookmarks = JSON.parse(localStorage.getItem('recipe-bookmarks'));
+    setBookmarks(newBookmarks)
+}
+  
 
   return loading ? (
     <Spinner />
@@ -71,7 +70,7 @@ export default function RecipeDisplay() {
             <use href="src/img/icons.svg#icon-user"></use>
           </svg>
         </div>
-        <button className="btn--round" onClick={addBookmark}>
+        <button className="btn--round" onClick={() => handleAddBookmark(currentRecipe)}>
           <svg className="">
             <use href="src/img/icons.svg#icon-bookmark-fill"></use>
           </svg>

@@ -18,17 +18,25 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [hash, setHash] = useState(null);
   const [appError, setAppError] = useState(null);
+  const [bookmarks, setBookmarks] = useState("");
+
+  useEffect(() => {
+    let myBookmarks = JSON.parse(localStorage.getItem("recipe-bookmarks"));
+    console.log(myBookmarks);
+    setBookmarks(myBookmarks);
+  }, []);
+  console.log(bookmarks);
 
   const addRecipeRef = useRef();
   const overlayRef = useRef() 
 
   //5ed6604691c37cdc054bd0f2
-  const ids = ['5ed6604691c37cdc054bd0f2', 'gaa5q691c37cdc054bd0f']
-  useEffect(() => {
-    localStorage.setItem('recipe-bookmarks', JSON.stringify(ids))
-  }, [])
+  // const dummyBookmarks = [{id: '5ed6604591c37cdc054bcf3b', img: 'http://forkify-api.herokuapp.com/images/epicuriousfacebook511b.png', title: 'Sushi Rice' }]
+  // useEffect(() => {
+  //   //on load get bookmarked recipes and 
+  //   localStorage.setItem('recipe-bookmarks', JSON.stringify(dummyBookmarks))
+  // }, [])
 
-  console.log(hash);
 
   const handleHashChange = async () => {
     console.log(window.location.hash.slice(1));
@@ -65,7 +73,8 @@ function App() {
     setSearchResults,
     currentRecipe,
     setCurrentRecipe,
-    bookmarks: "",
+    bookmarks,
+    setBookmarks,
     loading,
     setLoading,
     setHash,
@@ -73,7 +82,6 @@ function App() {
     overlayRef,
   };
 
-  console.log(currentRecipe);
 
   return (
     <AppContext.Provider value={globalState}>

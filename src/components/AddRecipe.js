@@ -1,11 +1,22 @@
 import React, { useState, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
-import App, { AppContext } from "../App";
+import { AppContext } from "../App";
 
 import NewIngredient from "./NewIngredient";
+import { createNewRecipe } from "../utils/helpers";
 
 export default function AddRecipe() {
   const { addRecipeRef, handleToggleModal } = useContext(AppContext);
+
+  const [ingredients, setIngredients] = useState([
+    {
+      id: uuidv4(),
+      description: "",
+      quantity: "",
+      unit: "",
+      num: 1,
+    },
+  ]);
 
   const [formState, setFormState] = useState({
     id: uuidv4(),
@@ -15,16 +26,7 @@ export default function AddRecipe() {
     publisher: "",
     prepTime: "",
     servings: "",
-    ingredients: [
-      {
-        id: uuidv4(),
-        name: "",
-        quantity: "",
-        units: "",
-      },
-    ],
   });
-  console.log(addRecipeRef);
 
   function closeModal() {
     handleToggleModal();
@@ -32,14 +34,37 @@ export default function AddRecipe() {
 
   const handleAddIngredient = (e) => {
     e.preventDefault();
-    let newIngredient = { id: uuidv4(), name: "", quantity: "", units: "" };
-    setFormState({
-      ...formState,
-      ingredients: [...formState.ingredients, newIngredient],
-    });
+    let newIngredient = {
+      num: ingredients.length + 1,
+      id: uuidv4(),
+      description: "",
+      quantity: "",
+      unit: "",
+    };
+    setIngredients([...ingredients, newIngredient]);
   };
 
-  //on Modal popup => add classlist .overlay to doc body for blur
+  //update ingredients state
+  const handleIngredientsChange = (e, i) => {
+    let oldIngredients = [...ingredients];
+    oldIngredients[i][e.target.name] = e.target.value;
+    setIngredients([...oldIngredients]);
+  };
+
+  //update form state
+  const handleFormChange = (e) => {
+    e.preventDefault();
+    console.log(formState);
+    setFormState({ ...formState, [e.target.name]: e.target.value });
+  };
+
+  //handle Upload button onClick
+  const handleRecipeUpload = async (e) => {
+    e.preventDefault();
+    let formData = formState;
+    formData.ingredients = [...ingredients];
+    createNewRecipe(formData);
+  };
 
   return (
     <div ref={addRecipeRef} className="add-recipe-window hidden">
@@ -47,29 +72,49 @@ export default function AddRecipe() {
         &times;
       </button>
       <div className="upload-header__container">
-        <h2 className="upload__heading">Data</h2>
+        <h2 className="upload__heading">Info</h2>
         <h2 className="upload__heading">Ingredients</h2>
       </div>
-      <form className="upload">
-        <div className="upload__column">
-          <label>Title</label>
-          <input value={formState.title} />
-          <label>URL</label>
-          <input value={formState.url} />
-          <label>Image URL</label>
-          <input value={formState.image} />
-          <label>Publisher</label>
-          <input value={formState.publisher} />
-          <label>Servings</label>
-          <input value={formState.servings} />
-          <label>Prep Time</label>
-          <input value={formState.prepTime} />
-        </div>
-        <div className="upload__ingredients">
-          {formState.ingredients.map((el) => {
-            return <NewIngredient />;
-          })}
-          {/* <label>Title</label>
+      <div className="upload">
+        <form onChange={handleFormChange}>
+          <div className="upload__column">
+            <label>Title</label>
+            <input name="title" value={formState.title} />
+            <label>URL</label>
+            <input type="url" name="url" value={formState.url} />
+            <label>Image URL</label>
+            <input type="url" name="image" value={formState.image} />
+            <label>Publisher</label>
+            <input name="publisher" value={formState.publisher} />
+            <label>Servings</label>
+            <input
+              min={1}
+              max={15}
+              type="number"
+              name="servings"
+              value={formState.servings}
+            />
+            <label>Prep Time</label>
+            <input
+              placeholder="in minutes"
+              type="number"
+              name="prepTime"
+              value={formState.prepTime}
+            />
+          </div>
+        </form>
+        <form>
+          <div className="upload__ingredients">
+            {ingredients.map((ingredient, i) => {
+              return (
+                <NewIngredient
+                  handleIngredientsChange={handleIngredientsChange}
+                  ingredient={ingredient}
+                  i={i}
+                />
+              );
+            })}
+            {/* <label>Title</label>
           <input value={formState.title} />
           <label>Title</label>
           <input value={formState.title} />
@@ -79,12 +124,22 @@ export default function AddRecipe() {
           <input value={formState.title} />
           <label>Title</label>
           <input value={formState.title} /> */}
-        </div>
-        <button className="upload__btn btn">Upload Recipe</button>
-        <button onClick={handleAddIngredient} className="upload__btn btn">
+          </div>
+        </form>
+        <button
+          type="submit"
+          onClick={(e) => handleRecipeUpload(e)}
+          className="upload__btn btn"
+        >
+          Upload Recipe
+        </button>
+        <button
+          onClick={(e) => handleAddIngredient(e)}
+          className="upload__btn btn"
+        >
           Add Ingredient
         </button>
-      </form>
+      </div>
     </div>
   );
 }
