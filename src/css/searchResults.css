@@ -2,6 +2,7 @@
     padding: 3rem 0;
     display: flex;
     flex-direction: column;
+    border-right: solid #333 1px;
 }
 .results {
     list-style: none;

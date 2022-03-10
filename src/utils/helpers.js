@@ -67,15 +67,6 @@ export const createNewRecipe = async (recipeObj) => {
 }
 
 
-//formData: 
-// {id: "c738388f-c85b-438f-85cb-1c47db6a4def"
-// image: ""
-// ingredients: [{…}]
-// prepTime: ""
-// publisher: ""
-// servings: ""
-// title: "sadfasdf"
-// url: ""}
 
 
 

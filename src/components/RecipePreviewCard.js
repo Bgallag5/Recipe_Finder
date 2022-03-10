@@ -3,38 +3,43 @@ import { AppContext } from "../App";
 import { getSingleRecipeData } from "../utils/API";
 
 export default function RecipePreviewCard(props) {
-  const { setLoading, setHash, bookmarks, setBookmarks } = useContext(AppContext);
+  const {
+    setLoading,
+    getSingleRecipeData,
+    bookmarks,
+    setBookmarks,
+    fetchSingleRecipe,
+  } = useContext(AppContext);
   const { id, title, img } = props.recipe;
 
-  const handleRecipeClick = async () => {
-    //   //setLoading = true
-    //  setLoading(true)
-    //  const recipeData = await getSingleRecipeData(id);
-    //  console.log(recipeData);
-    //  // setCurrentRecipe(recipeData) => setHash here and listen for hash change in App - hash change to trigger setCurrent?
-    //  setCurrentRecipe(recipeData)
-    //  setLoading(false)
-
-    setHash(id);
+  const handleRecipeClick = (id) => {
+    fetchSingleRecipe(id);
   };
 
   const handleDeleteBookmark = (id) => {
     //state and LS
     let bookmarksCopy = bookmarks;
-    const newBookmarks = bookmarksCopy.filter(el => el.id !== id);
+    const newBookmarks = bookmarksCopy.filter((el) => el.id !== id);
     console.log(newBookmarks);
-    localStorage.setItem('recipe-bookmarks', JSON.stringify(newBookmarks))
+    localStorage.setItem("recipe-bookmarks", JSON.stringify(newBookmarks));
     setBookmarks(newBookmarks);
-  }
+  };
 
   return (
     <li className="preview" key={id}>
       {props.bookmark && (
-        <button onClick={() => handleDeleteBookmark(id)} className="bookmark-delete-btn">
+        <button
+          onClick={() => handleDeleteBookmark(id)}
+          className="bookmark-delete-btn"
+        >
           &times;
         </button>
       )}
-          <a className="preview__link" onClick={handleRecipeClick} href={`#${id}`}>
+      <a
+        className="preview__link"
+        onClick={() => handleRecipeClick(id)}
+        href={`#${id}`}
+      >
         <figure className="preview__fig">
           <img src={img} alt={title} />
         </figure>

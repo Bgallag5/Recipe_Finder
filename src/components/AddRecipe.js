@@ -66,6 +66,14 @@ export default function AddRecipe() {
     createNewRecipe(formData);
   };
 
+  //this was blocking links to the recipe page 
+
+//  addRecipeRef && console.log(addRecipeRef.current.className.split(' ').includes('hidden'));
+  //     addRecipeRef.current?.className.split(' ').includes('hidden') && document.addEventListener("click", (e) => {
+  //   if (addRecipeRef.current.contains(e.target)) return;
+  //   handleToggleModal();
+  // });
+
   return (
     <div ref={addRecipeRef} className="add-recipe-window hidden">
       <button onClick={closeModal} className="btn--close-modal">

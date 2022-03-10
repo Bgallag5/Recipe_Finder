@@ -1,14 +1,12 @@
 import React from "react";
 
-export default function NoResults() {
+export default function NoResults({ appError }) {
   return (
     <div className="error">
-      <div>
-        <svg>
-          <use href="src/img/icons.svg#icon-alert-triangle"></use>
-        </svg>
-      </div>
-      <p>No recipes found for your query. Please try again!</p>
+        <i>
+          <span className="material-icons error__message">report_problem</span>
+        </i>
+      <p>{appError}</p>
     </div>
   );
 }

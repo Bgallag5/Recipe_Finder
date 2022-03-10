@@ -8,6 +8,7 @@ import Header from "./components/Header";
 import SearchResults from "./components/SearchResults";
 import RecipeDisplay from "./components/RecipeDisplay";
 import AddRecipe from "./components/AddRecipe";
+import Confirm from "./components/AppMessages/Confirm";
 
 //create global context
 export const AppContext = React.createContext();
@@ -15,9 +16,10 @@ export const AppContext = React.createContext();
 function App() {
   const [searchResults, setSearchResults] = useState(null);
   const [currentRecipe, setCurrentRecipe] = useState("");
+  // const [hash, setHash] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [hash, setHash] = useState(null);
   const [appError, setAppError] = useState(null);
+  const [appMessage, setAppMessage] = useState('')
   const [bookmarks, setBookmarks] = useState("");
 
   useEffect(() => {
@@ -28,22 +30,13 @@ function App() {
   console.log(bookmarks);
 
   const addRecipeRef = useRef();
-  const overlayRef = useRef() 
-
-  //5ed6604691c37cdc054bd0f2
-  // const dummyBookmarks = [{id: '5ed6604591c37cdc054bcf3b', img: 'http://forkify-api.herokuapp.com/images/epicuriousfacebook511b.png', title: 'Sushi Rice' }]
-  // useEffect(() => {
-  //   //on load get bookmarked recipes and 
-  //   localStorage.setItem('recipe-bookmarks', JSON.stringify(dummyBookmarks))
-  // }, [])
+  const overlayRef = useRef(); 
 
 
-  const handleHashChange = async () => {
-    console.log(window.location.hash.slice(1));
-    setHash(window.location.hash.slice(1))
+ const fetchSingleRecipe = async (id) => {
     try {
       setLoading(true)
-      const recipeData = await getSingleRecipeData(window.location.hash.slice(1));
+      const recipeData = await getSingleRecipeData(id);
       //if no error setRecipe Data
       console.log(recipeData);
       setCurrentRecipe(recipeData);
@@ -56,16 +49,15 @@ function App() {
   }
 
   //listen for hash change, onchange fetch single data with hash id
-  useEffect(() => {
-   hash && handleHashChange();
-  }, [hash]);
+  // useEffect(() => {
+  //  hash && handleHashChange();
+  // }, [hash]);
 
   const handleToggleModal = () => {
     addRecipeRef.current.classList.toggle('hidden');
     overlayRef.current.classList.toggle('hidden');
   }
 
-  // window.addEventListener('hashchange', handleHashChange)
 
   const globalState = {
     handleToggleModal,
@@ -77,17 +69,22 @@ function App() {
     setBookmarks,
     loading,
     setLoading,
-    setHash,
+    fetchSingleRecipe,
     addRecipeRef,
     overlayRef,
+    appError,
+    setAppError,
+    appMessage,
+    setAppMessage
   };
-
+console.log(appError);
 
   return (
     <AppContext.Provider value={globalState}>
       <div  className="container">
         <Header />
         <SearchResults />
+        {/* <Confirm /> */}
         <RecipeDisplay />
         </div>
         <div ref={overlayRef} className="overlay hidden"></div>

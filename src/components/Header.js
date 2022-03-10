@@ -6,7 +6,7 @@ import { AppContext } from "../App";
 import RecipePreviewCard from "./RecipePreviewCard";
 
 export default function Header() {
-  const { setSearchResults, handleToggleModal, bookmarks } = useContext(AppContext);
+  const { setSearchResults, handleToggleModal, bookmarks, setAppError } = useContext(AppContext);
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -14,6 +14,11 @@ export default function Header() {
   const handleRecipeSearch = async (e) => {
     e.preventDefault();
     let recipePreviewData = await getRecipeIDs(searchTerm);
+    console.log(recipePreviewData);
+    if (!recipePreviewData.length){
+      setAppError('No results found for this search term');
+      return
+    }
     setSearchResults(recipePreviewData);
   };
 

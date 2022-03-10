@@ -1,22 +1,24 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { AppContext } from "../App";
 import { addBookmark } from "../utils/helpers";
 
 import StartSearch from "./AppMessages/StartSearch";
 import Spinner from "./AppMessages/Spinner";
-
+import Confirm from "./AppMessages/Confirm";
 
 export default function RecipeDisplay() {
-  const { currentRecipe, loading, setBookmarks } = useContext(AppContext);
+  const { currentRecipe, loading, setBookmarks, setAppMessage } = useContext(AppContext);
 
   //add bookmark to localStorage and setState
-const handleAddBookmark = async (currentRecipe) => {
-   addBookmark(currentRecipe);
-    let newBookmarks = JSON.parse(localStorage.getItem('recipe-bookmarks'));
-    setBookmarks(newBookmarks)
-}
-  
+  const handleAddBookmark = async (currentRecipe) => {
+    addBookmark(currentRecipe);
+    let newBookmarks = JSON.parse(localStorage.getItem("recipe-bookmarks"));
+    setBookmarks(newBookmarks);
+    //toggle confirm message
+    setAppMessage('Added to Bookmarks!')
+  };
 
+  console.log(currentRecipe);
   return loading ? (
     <Spinner />
   ) : currentRecipe ? (
@@ -50,30 +52,17 @@ const handleAddBookmark = async (currentRecipe) => {
             {currentRecipe.servings}
           </span>
           <span className="recipe__info-text">servings</span>
-
-          <div className="recipe__info-buttons">
-            <button className="btn--tiny btn--increase-servings">
-              <svg>
-                <use href="src/img/icons.svg#icon-minus-circle"></use>
-              </svg>
-            </button>
-            <button className="btn--tiny btn--increase-servings">
-              <svg>
-                <use href="src/img/icons.svg#icon-plus-circle"></use>
-              </svg>
-            </button>
-          </div>
         </div>
-
-        <div className="recipe__user-generated">
-          <svg>
-            <use href="src/img/icons.svg#icon-user"></use>
-          </svg>
-        </div>
-        <button className="btn--round" onClick={() => handleAddBookmark(currentRecipe)}>
-          <svg className="">
-            <use href="src/img/icons.svg#icon-bookmark-fill"></use>
-          </svg>
+        <Confirm />
+        <button
+          className="btn--round  bookmark__btn"
+          onClick={() => handleAddBookmark(currentRecipe)}
+        >
+          <i>
+            <span className="material-icons">
+              bookmark_border
+            </span>
+          </i>
         </button>
       </div>
 
@@ -112,9 +101,9 @@ const handleAddBookmark = async (currentRecipe) => {
           rel="noreferrer"
         >
           <span>Directions</span>
-          <svg className="search__icon">
+          {/* <svg className="search__icon">
             <use href="src/images/icons.svg#icon-arrow-right"></use>
-          </svg>
+          </svg> */}
         </a>
       </div>
     </div>

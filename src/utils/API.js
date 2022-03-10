@@ -13,7 +13,7 @@ export const getRecipeIDs = async function(searchTerm){
       return recipeResults
     } catch (err) {
       console.log(err);
-      throw err;
+      return err;
     }
  };
 

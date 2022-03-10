@@ -1,12 +1,28 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { AppContext } from "../App";
 import RecipePreviewCard from "./RecipePreviewCard";
 import NoResults from "./AppMessages/NoResults";
 
 export default function SearchResults() {
   //consume and destructure context
-  const { searchResults } = useContext(AppContext);
+  const { searchResults, appError, setAppError } = useContext(AppContext);
   console.log(searchResults);
+
+  //if error, clear error after 3 seconds
+  useEffect(() => {
+    clearError();
+  }, [appError]);
+
+  function clearError() {
+    setTimeout(() => {
+      setAppError("");
+    }, 3000);
+  }
+
+  //if error render error message for 3 seconds
+  if (appError) {
+    return <NoResults appError={appError} />;
+  }
 
   //if no search results return blank div; if searchResults.length = 0 return 'No Results'
   return searchResults ? (
@@ -47,7 +63,7 @@ export default function SearchResults() {
         </p>
       </div>
     ) : (
-      <NoResults />
+      <NoResults appError={appError} />
     )
   ) : (
     <div></div>
