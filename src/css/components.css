@@ -55,7 +55,7 @@
   align-items: center;
 }
 
-.bookmark__btn{
+.bookmark__btn {
   color: white;
   margin-left: 30%;
 }
@@ -215,11 +215,11 @@
   font-weight: 600;
 }
 
-.error__message{
+.error__message {
   color: rgb(255, 217, 0);
 }
 
-.confirm__message{
+.confirm__message {
   z-index: 1000;
   width: 40rem;
   position: absolute;
@@ -228,8 +228,15 @@
   display: flex;
   font-size: 1.8rem;
   background-color: white;
-  box-shadow: #777 0px 2px  2px;
-  text-shadow: #777 .5px .3px;
+  box-shadow: #777 0px 2px 2px;
+  text-shadow: #777 0.5px 0.3px;
   border-radius: 5px;
   transition: all 0.5s 0.2s;
+}
+
+.directions--btn {
+  vertical-align: bottom;
+  font-size: 3rem;
+  padding: 0px;
+  margin: 0px 0px;
 }

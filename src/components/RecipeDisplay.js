@@ -7,7 +7,8 @@ import Spinner from "./AppMessages/Spinner";
 import Confirm from "./AppMessages/Confirm";
 
 export default function RecipeDisplay() {
-  const { currentRecipe, loading, setBookmarks, setAppMessage } = useContext(AppContext);
+  const { currentRecipe, loading, setBookmarks, setAppMessage } =
+    useContext(AppContext);
 
   //add bookmark to localStorage and setState
   const handleAddBookmark = async (currentRecipe) => {
@@ -15,7 +16,7 @@ export default function RecipeDisplay() {
     let newBookmarks = JSON.parse(localStorage.getItem("recipe-bookmarks"));
     setBookmarks(newBookmarks);
     //toggle confirm message
-    setAppMessage('Added to Bookmarks!')
+    setAppMessage("Added to Bookmarks!");
   };
 
   console.log(currentRecipe);
@@ -55,13 +56,12 @@ export default function RecipeDisplay() {
         </div>
         <Confirm />
         <button
+          title="Add Bookmark"
           className="btn--round  bookmark__btn"
           onClick={() => handleAddBookmark(currentRecipe)}
         >
           <i>
-            <span className="material-icons">
-              bookmark_border
-            </span>
+            <span className="material-icons">bookmark_border</span>
           </i>
         </button>
       </div>
@@ -95,15 +95,15 @@ export default function RecipeDisplay() {
           Please check out directions at their website.
         </p>
         <a
-          className="btn--small recipe__btn"
+          className="btn--small "
           href={currentRecipe.source_url}
           target="_blank"
           rel="noreferrer"
         >
           <span>Directions</span>
-          {/* <svg className="search__icon">
-            <use href="src/images/icons.svg#icon-arrow-right"></use>
-          </svg> */}
+          <i>
+            <span className="material-icons directions--btn">arrow_right_alt</span>
+          </i>
         </a>
       </div>
     </div>

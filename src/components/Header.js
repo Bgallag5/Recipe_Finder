@@ -54,6 +54,7 @@ export default function Header() {
         <ul className="nav__list">
           <li className="nav__item">
             <button
+            title="Create your own"
               onClick={handleClickAdd}
               className="nav__btn nav__btn--add-recipe"
             >
