@@ -61,6 +61,7 @@ export default function AddRecipe() {
   //handle Upload button onClick
   const handleRecipeUpload = async (e) => {
     e.preventDefault();
+    //combine form state and ingredients state
     let formData = formState;
     formData.ingredients = [...ingredients];
     createNewRecipe(formData);
@@ -87,15 +88,16 @@ export default function AddRecipe() {
         <form onChange={handleFormChange}>
           <div className="upload__column">
             <label>Title</label>
-            <input name="title" value={formState.title} />
+            <input name="title" value={formState.title} onChange={function(){}} />
             <label>URL</label>
-            <input type="url" name="url" value={formState.url} />
+            <input type="url" name="url" value={formState.url} onChange={function(){}}  />
             <label>Image URL</label>
-            <input type="url" name="image" value={formState.image} />
+            <input type="url" name="image" value={formState.image} onChange={function(){}}  />
             <label>Publisher</label>
-            <input name="publisher" value={formState.publisher} />
+            <input name="publisher" value={formState.publisher} onChange={function(){}}  />
             <label>Servings</label>
             <input
+            onChange={function(){}} 
               min={1}
               max={15}
               type="number"
@@ -108,6 +110,7 @@ export default function AddRecipe() {
               type="number"
               name="prepTime"
               value={formState.prepTime}
+              onChange={function(){}} 
             />
           </div>
         </form>
