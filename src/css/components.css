@@ -240,3 +240,14 @@
   padding: 0px;
   margin: 0px 0px;
 }
+
+.info--btn{
+  vertical-align: bottom;
+  font-size: 2.6rem;
+  padding: .2rem;
+  margin: 0 .6rem;
+}
+
+.check--icons{
+  margin-right: .4rem;
+}

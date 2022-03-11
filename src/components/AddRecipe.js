@@ -54,7 +54,6 @@ export default function AddRecipe() {
   //update form state
   const handleFormChange = (e) => {
     e.preventDefault();
-    console.log(formState);
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
@@ -65,7 +64,6 @@ export default function AddRecipe() {
     let formData = formState;
     formData.ingredients = [...ingredients];
    const newRecipe = await createNewRecipe(formData);
-   console.log(newRecipe);
    if (newRecipe.status === 'success') {
      handleAddBookmark(newRecipe);
      handleToggleModal();
@@ -73,13 +71,8 @@ export default function AddRecipe() {
    }
   };
 
-  //this was blocking links to the recipe page 
+  //this e.PreventDefault() was blocking links to the recipe page 
 
-//  addRecipeRef && console.log(addRecipeRef.current.className.split(' ').includes('hidden'));
-  //     addRecipeRef.current?.className.split(' ').includes('hidden') && document.addEventListener("click", (e) => {
-  //   if (addRecipeRef.current.contains(e.target)) return;
-  //   handleToggleModal();
-  // });
 
   return (
     <div ref={addRecipeRef} className="add-recipe-window hidden">
@@ -131,16 +124,6 @@ export default function AddRecipe() {
                 />
               );
             })}
-            {/* <label>Title</label>
-          <input value={formState.title} />
-          <label>Title</label>
-          <input value={formState.title} />
-          <label>Title</label>
-          <input value={formState.title} />
-          <label>Title</label>
-          <input value={formState.title} />
-          <label>Title</label>
-          <input value={formState.title} /> */}
           </div>
         </form>
         <button

@@ -6,18 +6,17 @@ import { AppContext } from "../App";
 import RecipePreviewCard from "./RecipePreviewCard";
 
 export default function Header() {
-  const { setSearchResults, handleToggleModal, bookmarks, setAppError } = useContext(AppContext);
+  const { setSearchResults, handleToggleModal, bookmarks, setAppError } =
+    useContext(AppContext);
 
   const [searchTerm, setSearchTerm] = useState("");
-
 
   const handleRecipeSearch = async (e) => {
     e.preventDefault();
     let recipePreviewData = await getRecipeIDs(searchTerm);
-    console.log(recipePreviewData);
-    if (!recipePreviewData.length){
-      setAppError('No results found for this search term');
-      return
+    if (!recipePreviewData.length) {
+      setAppError("No results found for this search term");
+      return;
     }
     setSearchResults(recipePreviewData);
   };
@@ -54,7 +53,7 @@ export default function Header() {
         <ul className="nav__list">
           <li className="nav__item">
             <button
-            title="Create your own"
+              title="Create your own"
               onClick={handleClickAdd}
               className="nav__btn nav__btn--add-recipe"
             >
@@ -79,7 +78,9 @@ export default function Header() {
               <ul className="bookmarks__list">
                 {bookmarks && bookmarks.length > 0 ? (
                   bookmarks.map((bookmark) => {
-                    return <RecipePreviewCard recipe={bookmark} bookmark={true} />;
+                    return (
+                      <RecipePreviewCard recipe={bookmark} bookmark={true} />
+                    );
                   })
                 ) : (
                   <div className="message">

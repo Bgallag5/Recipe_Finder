@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { AppContext } from "../../App";
 
-export default function Confirm({ message }) {
+export default function Confirm() {
   const { appMessage, setAppMessage } = useContext(AppContext);
 
   useEffect(() => {

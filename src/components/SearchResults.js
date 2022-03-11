@@ -7,32 +7,22 @@ let page = 0;
 
 export default function SearchResults() {
   //consume and destructure context
-  const { searchResults, appError, setAppError } = useContext(AppContext);
-  console.log(searchResults);
+  const { searchResults, appError, setAppError, fetchSingleRecipe } =
+    useContext(AppContext);
+
   const [displayedResults, setDisplayedResults] = useState("");
   const nextBtnRef = useRef();
   const prevBtnRef = useRef();
 
   const paginateResults = (num = 1) => {
     page = page + num;
-    //start/end points to slice 10 results
+    // start/end points to slice 10 results
     const start = (page - 1) * 10;
     const end = page * 10;
     let results = searchResults.slice(start, end);
     setDisplayedResults(results);
+    fetchSingleRecipe(results[0].id);
   };
-
-  // const pageNavigation = () => {
-  //   return page++
-  //   paginateResults();
-  // }
-
-  // only go left or right if we have results in that direction
-  // disable the button on these conditions:
-  // if displayedResults.length !== 10 - we dont have a next page to go to
-  // end = searchResults.pop(), if displayedResults.includes(end) - no more pages
-  // if page = 0/1
-  //start = serachResults.shift(), if displayedResults.includes(start) - no more pages
 
   useEffect(() => {
     searchResults && paginateResults();
@@ -42,7 +32,7 @@ export default function SearchResults() {
     // return if no results yet
     if (!displayedResults) return;
 
-    //clear hidden both btns
+    //clear hidden on both btns
     nextBtnRef.current.classList.remove("hidden");
     prevBtnRef.current.classList.remove("hidden");
     //access bookend elements
@@ -76,7 +66,6 @@ export default function SearchResults() {
   if (appError) {
     return <NoResults appError={appError} />;
   }
-  console.log("PAGE:", page);
   //if no search results return blank div; if searchResults.length = 0 return 'No Results'
   return displayedResults ? (
     displayedResults.length > 0 ? (
@@ -95,8 +84,10 @@ export default function SearchResults() {
             className="btn--inline pagination__btn--prev"
           >
             <i>
-            <span className="material-icons directions--btn">navigate_before</span>
-          </i>
+              <span className="material-icons directions--btn">
+                navigate_before
+              </span>
+            </i>
             <span>Page {page - 1}</span>
           </button>
           <button
@@ -106,8 +97,10 @@ export default function SearchResults() {
           >
             <span>Page {page + 1}</span>
             <i>
-            <span className="material-icons directions--btn">keyboard_arrow_right</span>
-          </i>
+              <span className="material-icons directions--btn">
+                keyboard_arrow_right
+              </span>
+            </i>
           </button>
         </div>
 

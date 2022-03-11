@@ -41,11 +41,9 @@ function App() {
       setLoading(true);
       const recipeData = await getSingleRecipeData(id);
       //if no error setRecipe Data
-      console.log(recipeData);
       setCurrentRecipe(recipeData);
       setLoading(false);
     } catch (err) {
-      console.log(err.message);
       setLoading(false);
       setAppError(err.message);
     }

@@ -1,23 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { AppContext } from "../App";
-import { addBookmark } from "../utils/helpers";
 
 import StartSearch from "./AppMessages/StartSearch";
 import Spinner from "./AppMessages/Spinner";
 import Confirm from "./AppMessages/Confirm";
 
 export default function RecipeDisplay() {
-  const { currentRecipe, loading, handleAddBookmark } =
-    useContext(AppContext);
-
-  //add bookmark to localStorage and setState
-  // const handleAddBookmark = async (currentRecipe) => {
-  //   addBookmark(currentRecipe);
-  //   let newBookmarks = JSON.parse(localStorage.getItem("recipe-bookmarks"));
-  //   setBookmarks(newBookmarks);
-  //   //toggle confirm message
-  //   setAppMessage("Added to Bookmarks!");
-  // };
+  const { currentRecipe, loading, handleAddBookmark } = useContext(AppContext);
 
   console.log(currentRecipe);
   return loading ? (
@@ -37,18 +26,18 @@ export default function RecipeDisplay() {
 
       <div className="recipe__details">
         <div className="recipe__info">
-          <svg className="recipe__info-icon">
-            <use href="src/img/icons.svg#icon-clock"></use>
-          </svg>
+          <i>
+            <span className="material-icons info--btn">watch_later</span>
+          </i>
           <span className="recipe__info-data recipe__info-data--minutes">
             {currentRecipe.cooking_time}
           </span>
           <span className="recipe__info-text">minutes</span>
         </div>
         <div className="recipe__info">
-          <svg className="recipe__info-icon">
-            <use href="src/img/icons.svg#icon-users"></use>
-          </svg>
+          <i>
+            <span className="material-icons info--btn">people_alt</span>
+          </i>
           <span className="recipe__info-data recipe__info-data--people">
             {currentRecipe.servings}
           </span>
@@ -73,9 +62,9 @@ export default function RecipeDisplay() {
             currentRecipe.ingredients.map((ingredient) => {
               return (
                 <li className="recipe__ingredient">
-                  <svg className="recipe__icon">
-                    <use href="src/img/icons.svg#icon-check"></use>
-                  </svg>
+                  <i>
+                    <span className="material-icons check--icons">check</span>
+                  </i>
                   <div className="recipe__quantity">{ingredient.quantity}</div>
                   <div className="recipe__description">
                     <span className="recipe__unit">{ingredient.unit} </span>
@@ -102,7 +91,9 @@ export default function RecipeDisplay() {
         >
           <span>Directions</span>
           <i>
-            <span className="material-icons directions--btn">arrow_right_alt</span>
+            <span className="material-icons directions--btn">
+              arrow_right_alt
+            </span>
           </i>
         </a>
       </div>
