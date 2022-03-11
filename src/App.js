@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 
 import "./css/main.css";
 import { getSingleRecipeData } from "./utils/API";
+import { addBookmark } from "./utils/helpers";
 
 import Header from "./components/Header";
 import SearchResults from "./components/SearchResults";
@@ -23,6 +24,14 @@ function App() {
     let myBookmarks = JSON.parse(localStorage.getItem("recipe-bookmarks"));
     setBookmarks(myBookmarks);
   }, []);
+
+  const handleAddBookmark = async (currentRecipe) => {
+    addBookmark(currentRecipe);
+    let newBookmarks = JSON.parse(localStorage.getItem("recipe-bookmarks"));
+    setBookmarks(newBookmarks);
+    //toggle confirm message
+    setAppMessage("Added to Bookmarks!");
+  };
 
   const addRecipeRef = useRef();
   const overlayRef = useRef();
@@ -64,6 +73,7 @@ function App() {
     setAppError,
     appMessage,
     setAppMessage,
+    handleAddBookmark
   };
 
   return (

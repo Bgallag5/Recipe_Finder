@@ -7,8 +7,9 @@ export const getRecipeIDs = async function(searchTerm){
     try {
      const response = await axios.get(`${API_URL}?search=${searchTerm}`);
       //return first 25 results
+      console.log(response.data.data);
       let recipeResults = response.data.data.recipes.slice(0, 50).map(recipe => {
-        return {id: recipe.id, title: recipe.title, img: recipe.image_url }
+        return {id: recipe.id, title: recipe.title, img: recipe.image_url, publisher: recipe.publisher }
       });
       return recipeResults
     } catch (err) {

@@ -7,17 +7,17 @@ import Spinner from "./AppMessages/Spinner";
 import Confirm from "./AppMessages/Confirm";
 
 export default function RecipeDisplay() {
-  const { currentRecipe, loading, setBookmarks, setAppMessage } =
+  const { currentRecipe, loading, handleAddBookmark } =
     useContext(AppContext);
 
   //add bookmark to localStorage and setState
-  const handleAddBookmark = async (currentRecipe) => {
-    addBookmark(currentRecipe);
-    let newBookmarks = JSON.parse(localStorage.getItem("recipe-bookmarks"));
-    setBookmarks(newBookmarks);
-    //toggle confirm message
-    setAppMessage("Added to Bookmarks!");
-  };
+  // const handleAddBookmark = async (currentRecipe) => {
+  //   addBookmark(currentRecipe);
+  //   let newBookmarks = JSON.parse(localStorage.getItem("recipe-bookmarks"));
+  //   setBookmarks(newBookmarks);
+  //   //toggle confirm message
+  //   setAppMessage("Added to Bookmarks!");
+  // };
 
   console.log(currentRecipe);
   return loading ? (

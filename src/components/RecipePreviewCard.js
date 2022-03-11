@@ -10,7 +10,8 @@ export default function RecipePreviewCard(props) {
     setBookmarks,
     fetchSingleRecipe,
   } = useContext(AppContext);
-  const { id, title, img } = props.recipe;
+  const { id, title, img, publisher } = props.recipe;
+  console.log(props.recipe);
 
   const handleRecipeClick = (id) => {
     fetchSingleRecipe(id);
@@ -24,6 +25,11 @@ export default function RecipePreviewCard(props) {
     localStorage.setItem("recipe-bookmarks", JSON.stringify(newBookmarks));
     setBookmarks(newBookmarks);
   };
+
+  // const imageEl = () => {
+  //     if we have a real image: return JSX img like normal
+  //     else no real img source? display placeholder img
+  // }
 
   return (
     <li className="preview" key={id}>
@@ -45,7 +51,7 @@ export default function RecipePreviewCard(props) {
         </figure>
         <div className="preview__data">
           <h4 className="preview__title">{title}</h4>
-          <p className="preview__publisher">The Pioneer Woman</p>
+          <p className="preview__publisher">{publisher}</p>
           {/* <div class="preview__user-generated">
             <svg>
               <use href="src/img/icons.svg#icon-user"></use>

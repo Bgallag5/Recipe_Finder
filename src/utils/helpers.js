@@ -62,8 +62,9 @@ export const createNewRecipe = async (recipeObj) => {
     //send data with AJAX request to POST new recipe to our API
     const data = await AJAX(`${API_URL}?key=${KEY}`, newRecipe);
     console.log(data);
+    return data
     // if ok, rebuild our recipeObj to add it to Bookmarks
-    //addBookmark(data.data.recipe)
+    // addBookmark(data.data.recipe)
 }
 
 

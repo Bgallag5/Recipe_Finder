@@ -6,7 +6,7 @@ import NewIngredient from "./NewIngredient";
 import { createNewRecipe } from "../utils/helpers";
 
 export default function AddRecipe() {
-  const { addRecipeRef, handleToggleModal } = useContext(AppContext);
+  const { addRecipeRef, handleToggleModal, handleAddBookmark } = useContext(AppContext);
 
   const [ingredients, setIngredients] = useState([
     {
@@ -64,7 +64,13 @@ export default function AddRecipe() {
     //combine form state and ingredients state
     let formData = formState;
     formData.ingredients = [...ingredients];
-    createNewRecipe(formData);
+   const newRecipe = await createNewRecipe(formData);
+   console.log(newRecipe);
+   if (newRecipe.status === 'success') {
+     handleAddBookmark(newRecipe);
+     handleToggleModal();
+     return;
+   }
   };
 
   //this was blocking links to the recipe page 
