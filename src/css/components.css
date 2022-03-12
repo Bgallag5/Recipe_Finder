@@ -220,14 +220,33 @@
 }
 
 .confirm__message {
+  align-items:center;
   z-index: 1000;
-  width: 40rem;
+  width: 25vw;
   position: absolute;
   margin-left: 35%;
   padding: 5rem 2rem;
   display: flex;
   font-size: 1.8rem;
-  background-color: white;
+  background-color: rgb(250, 234, 162);
+  box-shadow: #777 0px 2px 2px;
+  text-shadow: #777 0.5px 0.3px;
+  border-radius: 5px;
+  transition: all 0.5s 0.2s;
+}
+
+.form__message {
+  align-items:center;
+  z-index: 1000;
+  width: 25vw;
+  position: absolute;
+  margin: .6rem 1rem;
+  top: 0;
+  left: 0;
+  padding: 1rem 1rem;
+  display: flex;
+  font-size: 1.8rem;
+  background-color: rgb(250, 234, 162);
   box-shadow: #777 0px 2px 2px;
   text-shadow: #777 0.5px 0.3px;
   border-radius: 5px;

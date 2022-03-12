@@ -4,7 +4,6 @@ import { AppContext } from "../App";
 export default function RecipePreviewCard(props) {
   const { bookmarks, setBookmarks, fetchSingleRecipe } = useContext(AppContext);
   const { id, title, img, publisher } = props.recipe;
-  console.log(props.recipe);
 
   const handleRecipeClick = (id) => {
     fetchSingleRecipe(id);

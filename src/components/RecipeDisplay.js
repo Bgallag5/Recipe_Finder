@@ -3,12 +3,11 @@ import { AppContext } from "../App";
 
 import StartSearch from "./AppMessages/StartSearch";
 import Spinner from "./AppMessages/Spinner";
-import Confirm from "./AppMessages/Confirm";
+import AppMessage from "./AppMessages/AppMessage";
 
 export default function RecipeDisplay() {
   const { currentRecipe, loading, handleAddBookmark } = useContext(AppContext);
 
-  console.log(currentRecipe);
   return loading ? (
     <Spinner />
   ) : currentRecipe ? (
@@ -43,7 +42,7 @@ export default function RecipeDisplay() {
           </span>
           <span className="recipe__info-text">servings</span>
         </div>
-        <Confirm />
+        <AppMessage />
         <button
           title="Add Bookmark"
           className="btn--round  bookmark__btn"

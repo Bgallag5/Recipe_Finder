@@ -1,8 +1,9 @@
 import React from 'react'
 
-export default function NewIngredient({ingredient, i, handleIngredientsChange}) {
+export default function NewIngredient({ingredient, i, handleIngredientsChange, deleteIngredient}) {
   return (
     <div className="new-ingredient" onChange={(e) => handleIngredientsChange(e, i)}>
+      {/* <button onClick={(e) => deleteIngredient(e, ingredient)}>X </button> */}
     <label>Ingredient {i + 1} </label>
     <input value={ingredient.ingredientName} name='description' placeholder="Ingredient" className='ingredient__data' />
     <input name='quantity' value={ingredient.quantity} type="number" placeholder="Quantity" className="ingredient__data"/>

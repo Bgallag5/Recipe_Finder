@@ -15,30 +15,35 @@ export const AppContext = React.createContext();
 function App() {
   const [searchResults, setSearchResults] = useState(null);
   const [currentRecipe, setCurrentRecipe] = useState("");
+  const [bookmarks, setBookmarks] = useState("");
   const [loading, setLoading] = useState(false);
   const [appError, setAppError] = useState(null);
   const [appMessage, setAppMessage] = useState("");
-  const [bookmarks, setBookmarks] = useState("");
 
+  //on load get bookmarks, set them as state
   useEffect(() => {
     let myBookmarks = JSON.parse(localStorage.getItem("recipe-bookmarks"));
     setBookmarks(myBookmarks);
   }, []);
 
-  const handleAddBookmark = async (currentRecipe) => {
-    addBookmark(currentRecipe);
+  //take recipe object, add to bookmarks
+  const handleAddBookmark = (currentRecipe) => {
+    //validate and add bookmark
+   let res = addBookmark(currentRecipe);
+   console.log(res);
+    //re-fetch and set state
     let newBookmarks = JSON.parse(localStorage.getItem("recipe-bookmarks"));
     setBookmarks(newBookmarks);
     //toggle confirm message
-    setAppMessage("Added to Bookmarks!");
+    setAppMessage({ msg: res.msg, type: "bookmarkAdded", timer: 3000 });
   };
 
   const addRecipeRef = useRef();
   const overlayRef = useRef();
 
   const fetchSingleRecipe = async (id) => {
+    setLoading(true);
     try {
-      setLoading(true);
       const recipeData = await getSingleRecipeData(id);
       //if no error setRecipe Data
       setCurrentRecipe(recipeData);
@@ -50,7 +55,7 @@ function App() {
   };
 
   const handleToggleModal = () => {
-    addRecipeRef.current.classList.toggle("hidden");
+    addRecipeRef.current?.classList.toggle("hidden");
     overlayRef.current.classList.toggle("hidden");
   };
 

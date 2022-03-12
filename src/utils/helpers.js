@@ -24,9 +24,9 @@ export const AJAX = async function (url, uploadData = undefined) {
     const res = await Promise.race([fetchPro, timeout(TIMEOUT_SEC)]);
     const data = await res.json();
 
-    if (!res.ok) throw new Error(`${data.message} (${res.status})`);
     return data;
   } catch (err) {
+    console.log(err);
     throw err;
   }
 };
@@ -40,15 +40,33 @@ export const addBookmark = (recipe) => {
     localStorage.setItem('recipe-bookmarks', JSON.stringify([{id, img: image_url, title}]));
     return
   }
-  //if bookmarks, spread and add new item
-  localStorage.setItem('recipe-bookmarks', JSON.stringify([...myBookmarks, {id, img: image_url, title}]));
+  const valid = checkBookmarks(myBookmarks, recipe);
+  console.log(valid);
+
+  //if valid bookmark, spread and add new item
+ valid.status && localStorage.setItem('recipe-bookmarks', JSON.stringify([...myBookmarks, {id, img: image_url, title}]));
+ return valid
 }
 
+//return true if we can add this recipe to bookmarks
+function checkBookmarks(bookmarksArr, recipe){
+  //maximum 20 bookmarks
+  if (bookmarksArr.length >= 20){
+    return {status: false, msg: 'Maximun bookmarks reached. \n Please remove a bookmark'}
+  }
+  //prevent duplicate bookmarks
+  if (bookmarksArr.some(el => el.id === recipe.id)){
+    return {status: false, msg: 'Duplicate Bookmark: Not Added'}
+  }
+  return {status: true, msg: "Added to Bookmarks!"}
+}
 
 //add a new recipe
 export const createNewRecipe = async (recipeObj) => {
   //build new recipe object
     const {id, image, ingredients, prepTime, publisher, title, url, servings } = recipeObj;
+    console.log(ingredients);
+    
     const newRecipe = {
         id,
         title,

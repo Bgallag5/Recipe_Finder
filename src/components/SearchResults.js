@@ -25,6 +25,8 @@ export default function SearchResults() {
   };
 
   useEffect(() => {
+    //reset page to 0 if searchResults change (if user searches another term)
+    page = 0;
     searchResults && paginateResults();
   }, [searchResults]);
 
