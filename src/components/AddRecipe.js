@@ -69,9 +69,9 @@ export default function AddRecipe() {
   //handle Upload button onClick
   const handleRecipeUpload = async (e) => {
     e.preventDefault();
-    //combine form state and ingredients state
+
     let formData = formState;
-    //filter out ingredients that are completely empty
+    //confirm all data fields are complete
     for (const field of Object.values(formData)) {
       console.log(field);
       if (!field) {
@@ -84,11 +84,27 @@ export default function AddRecipe() {
         return;
       }
     }
-    // parse the rest and if any of them are partially filled, prompt to finish or delete ingredient
-    //pop up error msg if fields are empty
+
+    let ingredientData = ingredients;
+    //if any are partially filled, prompt user to complete
+    ingredientData.forEach((ingredient) => {
+      for (const field of Object.values(ingredient)) {
+        if (field === "") {
+          setAppMessage({
+            msg: "Incomplete Ingredient Item",
+            type: "incompleteForm",
+            timer: 3000,
+          });
+          return;
+        }
+      }
+    });
+    console.log(ingredientData);
+
+    //combine form state and ingredients state
     formData.ingredients = [...ingredients];
+    //create new recipe, handle success/fail
     const newRecipe = await createNewRecipe(formData);
-    console.log(newRecipe);
     if (newRecipe.status === "success") {
       handleAddBookmark(newRecipe);
       handleToggleModal();
@@ -117,10 +133,6 @@ export default function AddRecipe() {
   //     document.removeEventListener("mousedown", handler);
   //   };
   // });
-
-  useEffect(() => {});
-
-  console.log(ingredients);
 
   return (
     ingredients && (
