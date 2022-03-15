@@ -8,7 +8,7 @@ import { createNewRecipe } from "../utils/helpers";
 import AppMessage from "./AppMessages/AppMessage";
 
 export default function AddRecipe() {
-  const { addRecipeRef, handleToggleModal, handleAddBookmark, setAppMessage } =
+  const { addRecipeRef, handleToggleModal, handleAddBookmark, setAppMessage, modalVisible, toggleModalVisible } =
     useContext(AppContext);
   // const [modalVisible, toggleModalVisible] = useState(false)
 
@@ -32,7 +32,7 @@ export default function AddRecipe() {
   });
 
   function closeModal() {
-    handleToggleModal();
+    toggleModalVisible(false)
   }
 
   const handleAddIngredient = (e) => {
@@ -118,25 +118,22 @@ export default function AddRecipe() {
     }
   };
 
-  // useEffect(() => {
-  //   console.log(modalVisible);
-  //   let handler = (e) => {
-  //     if (modalVisible && !addRecipeRef?.current.contains(e.target)) {
-  //       console.log('CLICK OUTSIDE MODAL');
-  //       handleToggleModal();
-  //     }
-  //   };
-  //   // console.log(!modalVisible);
-  //     document.addEventListener("mousedown", handler);
+  useEffect(() => {
+    const handleBodyClick = (e) => {
+      if (!addRecipeRef.current.contains(e.target)){
+        console.log('CLICK OUTSIDE MODAL');
+        toggleModalVisible(false)
+      }
+    } 
+    document.body.addEventListener('click', handleBodyClick, {capture: true});
 
-  //   return () => {
-  //     document.removeEventListener("mousedown", handler);
-  //   };
-  // });
-
+    return () => document.removeEventListener('click', handleBodyClick, {capture: true})
+  }, []);
+  
+console.log(modalVisible);
   return (
     ingredients && (
-      <div ref={addRecipeRef} className="add-recipe-window hidden">
+      <div ref={addRecipeRef} className={`add-recipe-window ${modalVisible ? '' : 'hidden'}`}>
         <button onClick={closeModal} className="btn--close-modal">
           &times;
         </button>

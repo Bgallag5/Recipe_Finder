@@ -19,6 +19,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [appError, setAppError] = useState(null);
   const [appMessage, setAppMessage] = useState("");
+  const [modalVisible, toggleModalVisible] = useState(false)
 
   //on load get bookmarks, set them as state
   useEffect(() => {
@@ -55,12 +56,15 @@ function App() {
   };
 
   const handleToggleModal = () => {
-    addRecipeRef.current?.classList.toggle("hidden");
-    overlayRef.current.classList.toggle("hidden");
+    // addRecipeRef.current?.classList.toggle("hidden");
+    toggleModalVisible(!modalVisible)
+    // overlayRef.current.classList.toggle("hidden");
   };
 
   const globalState = {
     handleToggleModal,
+    modalVisible,
+    toggleModalVisible,
     searchResults,
     setSearchResults,
     currentRecipe,
@@ -86,7 +90,7 @@ function App() {
         <SearchResults />
         <RecipeDisplay />
       </div>
-      <div ref={overlayRef} className="overlay hidden"></div>
+      <div ref={overlayRef} className={`overlay ${modalVisible ? '' : 'hidden'}`}></div>
       <AddRecipe />
     </AppContext.Provider>
   );
